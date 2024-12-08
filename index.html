@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Grades</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      margin: 22.5px;
+      padding: 22.5px;
+      background-color: #a98e8e;
+      color: black;
+    }
+    h1 {
+      text-align: center;
+    }
+    button {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background-color: gray;
+      color: white;
+      border-radius: 5px;
+      position: absolute;
+      left: 45%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Student Grades Calculator</h1>
+  <button onclick="calculateGrades()">Calculate Grades</button>
+  <div id="result"></div>
+
+  <script>
+    function calculateGrades() {
+      let students = [];
+      let average = true;
+
+      while (average) {
+        let grades = [];
+
+        for (let i = 1; i <= 3; i++) {
+          let grade = prompt("Enter grade for Subject " + i + ":");
+          grade = parseFloat(grade);
+
+          if (isNaN(grade) || grade < 0 || grade > 100) {
+            alert("Please enter a number between 0 and 100.");
+            i--;
+          } else {
+            grades.push(grade);
+          }
+        }
+        students.push(grades);
+        let another = prompt("Do you want to add another student? (yes or no)");
+        if (another.toLowerCase() !== "yes") {
+          average = false;
+        }
+      }
+
+      let resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "";
+      for (let i = 0; i < students.length; i++) {
+        let grades = students[i];
+        let total = 0;
+        for (let j = 0; j < grades.length; j++) {
+          total += grades[j];
+        }
+        let average = total / grades.length;
+        let letterGrade = "";
+        if (average >= 90) {
+          letterGrade = "A";
+        } else if (average >= 80) {
+          letterGrade = "B";
+        } else if (average >= 70) {
+          letterGrade = "C";
+        } else if (average >= 60) {
+          letterGrade = "D";
+        } else {
+          letterGrade = "F";
+        }
+        resultDiv.innerHTML += "<p>Student " + (i + 1) + ":</p>";
+        resultDiv.innerHTML += "<p>Grades: " + grades.join(", ") + "</p>";
+        resultDiv.innerHTML += "<p>Average: " + average.toFixed(2) + "</p>";
+        resultDiv.innerHTML += "<p>Letter Grade: " + letterGrade + "</p><hr>";
+      }
+    }
+  </script>
+</body>
+</html>
